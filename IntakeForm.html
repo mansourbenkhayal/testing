@@ -1,0 +1,1844 @@
+<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script type="text/javascript" language="javascript" src= "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" ></script>
+<script type="text/javascript" src="/Webapi.js"></script>
+<script type="text/javascript" src="/FilterAreaandBU.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<script type="text/javascript" src="/semantic.min.js"></script>
+<script type="text/javascript" src="/MultiselectDropdownCore.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+
+<style>
+    .dropdown-toggle {
+        height: 35px
+    }
+
+    .tabbable-panel {
+        border: 1px solid #eee;
+        padding: 10px 10px 55px 10px;
+        margin-bottom: 15px;
+    }
+
+    /* Default mode */
+    .tabbable-line>.nav-tabs {
+        border: none;
+        margin: 0px;
+    }
+
+    .tabbable-line>.nav-tabs>li {
+        margin-right: 2px;
+    }
+
+    .tabbable-line>.nav-tabs>li>a {
+        border: 0;
+        margin-right: 0;
+        color: #737373;
+    }
+
+    .tabbable-line>.nav-tabs>li>a>i {
+        color: #a6a6a6;
+    }
+
+    .tabbable-line>.nav-tabs>li.open,
+    .tabbable-line>.nav-tabs>li:hover {
+        border-bottom: 4px solid #fbcdcf;
+    }
+
+    .tabbable-line>.nav-tabs>li.open>a,
+    .tabbable-line>.nav-tabs>li:hover>a {
+        border: 0;
+        background: none !important;
+        color: #333333;
+    }
+
+    .tabbable-line>.nav-tabs>li.open>a>i,
+    .tabbable-line>.nav-tabs>li:hover>a>i {
+        color: #a6a6a6;
+    }
+
+    .tabbable-line>.nav-tabs>li.open .dropdown-menu,
+    .tabbable-line>.nav-tabs>li:hover .dropdown-menu {
+        margin-top: 0px;
+    }
+
+    .tabbable-line>.nav-tabs>li.active {
+        border-bottom: 4px solid #f3565d;
+        position: relative;
+    }
+
+    .tabbable-line>.nav-tabs>li.active>a {
+        border: 0;
+        color: #333333;
+    }
+
+    .tabbable-line>.nav-tabs>li.active>a>i {
+        color: #404040;
+    }
+
+    .tabbable-line>.tab-content {
+        margin-top: -3px;
+        background-color: #fff;
+        border: 0;
+        border-top: 1px solid #eee;
+        padding: 15px 0;
+    }
+
+    .portlet .tabbable-line>.tab-content {
+        padding-bottom: 0;
+    }
+
+    /* Below tabs mode */
+    .tabbable-line.tabs-below>.nav-tabs>li {
+        border-top: 4px solid transparent;
+    }
+
+    .tabbable-line.tabs-below>.nav-tabs>li>a {
+        margin-top: 0;
+    }
+
+    .tabbable-line.tabs-below>.nav-tabs>li:hover {
+        border-bottom: 0;
+        border-top: 4px solid #fbcdcf;
+    }
+
+    .tabbable-line.tabs-below>.nav-tabs>li.active {
+        margin-bottom: -2px;
+        border-bottom: 0;
+        border-top: 4px solid #f3565d;
+    }
+
+    .tabbable-line.tabs-below>.tab-content {
+        margin-top: -10px;
+        border-top: 0;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 15px;
+    }
+
+    .newCaseBtn {
+        float: right;
+        margin: 5px 15px 0 15px;
+    }
+
+    .ui.fluid.dropdown {
+        display: block;
+        width: 100%;
+        min-width: 0;
+        position: relative;
+    }
+
+    .ui.selection.active.dropdown {
+        border-color: #e6e6e6 !important;
+    }
+
+    .ui.selection.active.dropdown .menu {
+        border-color: #3071a9;
+        -webkit-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        -moz-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+    }
+
+    .ui.selection.active.dropdown:hover {
+        border-color: #e6e6e6;
+        -webkit-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        -moz-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+    }
+
+    .ui.selection.active.dropdown:hover .menu {
+        border-color: #e6e6e6;
+        -webkit-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        -moz-box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+        box-shadow: 0px 3px 19px -15px rgba(0, 0, 0, 0.41);
+    }
+
+    .ui.selection.dropdown:focus {
+        border-color: #e6e6e6;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .ui.selection.dropdown {
+        padding: 10px;
+        position: relative;
+    }
+
+    .ui.selection.dropdown>.dropdown.icon {
+        top: 15px;
+    }
+
+    .ui.multiple.dropdown>.label {
+        -webkit-box-shadow: none;
+        box-shadow: none;
+    }
+
+    .ui.label {
+        background: #3071a9;
+    }
+
+    .ui.label a {
+        opacity: 1;
+        color: #fff;
+        padding: 8px 10px !important;
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+        border: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui.label a {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+    }
+
+    .ui.label a:hover,
+    .ui.label a:focus,
+    .ui.label a.active {
+        background: #3071a9;
+        color: #fff;
+    }
+
+    .ui.label>.delete.icon {
+        opacity: 1;
+    }
+
+    .ui.selection.dropdown .menu>.item {
+        border-top: 1px solid #e6e6e6;
+    }
+
+    .ui.dropdown .menu>.item {
+        -webkit-transition: 0.3s;
+        -o-transition: 0.3s;
+        transition: 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui.dropdown .menu>.item {
+            -webkit-transition: none;
+            -o-transition: none;
+            transition: none;
+        }
+    }
+
+    .ui.dropdown .menu>.item:hover {
+        background: #3071a9;
+        color: #fff;
+    }
+
+    .avatarStyle {
+        display: inline-flex;
+        /* border: 1px solid red; */
+        padding: 10px;
+        height: 0px;
+    }
+
+    .circle {
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        margin: -2px;
+        background-color: green;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Effect 1 */
+    .hovicon.effect-1 {
+        /* background: rgba(255, 255, 255, 0.11); */
+        -webkit-transition: background 0.2s, color 0.2s;
+        -moz-transition: background 0.2s, color 0.2s;
+        transition: background 0.2s, color 0.2s;
+    }
+
+    .hovicon.effect-1:after {
+        top: -7px;
+        left: -7px;
+        padding: 7px;
+        box-shadow: 0 0 0 4px #fff;
+        -webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
+        -webkit-transform: scale(.8);
+        -moz-transition: -moz-transform 0.2s, opacity 0.2s;
+        -moz-transform: scale(.8);
+        -ms-transform: scale(.8);
+        transition: transform 0.2s, opacity 0.2s;
+        transform: scale(.8);
+        opacity: 0;
+    }
+
+    /* Effect 1a */
+    .hovicon.effect-1.sub-a:hover {
+        background: rgba(255, 255, 255, 1);
+        color: #41ab6b;
+    }
+
+    .hovicon.effect-1.sub-a:hover i {
+        color: #41ab6b;
+    }
+
+    .hovicon.effect-1.sub-a:hover:after {
+        -webkit-transform: scale(1);
+        -moz-transform: scale(1);
+        -ms-transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    .error-highlight {
+        border-color: red !important;
+    }
+
+    /* Styles for the loader container */
+    .loader-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        display: none;
+        /* Initially hidden */
+    }
+
+    /* Styles for the loader */
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 75px;
+        height: 75px;
+        animation: spin 2s linear infinite;
+        position: relative;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    /* Safari */
+    @-webkit-keyframes spin {
+        0% {
+            -webkit-transform: rotate(0deg);
+        }
+
+        100% {
+            -webkit-transform: rotate(360deg);
+        }
+    }
+
+    /* Standard keyframes */
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
+
+    /* File upload styles */
+    a:focus {
+        outline: none !important;
+        outline-offset: none !important;
+    }
+
+    body {
+        background: #f5f6f5;
+        color: #333;
+    }
+
+    /* helper classses */
+    .margin-top-20 {
+        margin-top: 20px;
+    }
+
+    .margin-bottom-20 {
+        margin-top: 20px;
+    }
+
+    .no-margin {
+        margin: 0px;
+    }
+
+    /* box component */
+    .box {
+        border-color: #e6e6e6;
+        background: #FFF;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+        padding: 10px;
+        margin-bottom: 40px;
+    }
+
+    .box-center {
+        margin: 20px auto;
+    }
+
+    /* input [type = file]
+----------------------------------------------- */
+    input[type=file] {
+        display: block !important;
+        right: 1px;
+        top: 1px;
+        height: 34px;
+        opacity: 0;
+        width: 100%;
+        background: none;
+        position: absolute;
+        overflow: hidden;
+        z-index: 2;
+    }
+
+    .control-fileupload {
+        display: block;
+        border: 1px solid #d6d7d6;
+        background: #FFF;
+        border-radius: 0px;
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        padding: 5px 10px 2px 10px;
+        overflow: hidden;
+        position: relative;
+
+        &:before,
+        input,
+        label {
+            cursor: pointer !important;
+        }
+
+        /* File upload button */
+        &:before {
+            /* inherit from boostrap btn styles */
+            padding: 4px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            line-height: 20px;
+            color: #333333;
+            text-align: center;
+            text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: #f5f5f5;
+            background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+            background-repeat: repeat-x;
+            border: 1px solid #cccccc;
+            border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+            border-bottom-color: #b3b3b3;
+            border-radius: 4px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+            transition: color 0.2s ease;
+
+            /* add more custom styles*/
+            content: 'Browse';
+            display: block;
+            position: absolute;
+            z-index: 1;
+            top: 2px;
+            right: 2px;
+            line-height: 20px;
+            text-align: center;
+        }
+
+        &:hover,
+        &:focus {
+            &:before {
+                color: #333333;
+                background-color: #e6e6e6;
+                color: #333333;
+                text-decoration: none;
+                background-position: 0 -15px;
+                transition: background-position 0.2s ease-out;
+            }
+        }
+
+        label {
+            line-height: 24px;
+            color: #999999;
+            font-size: 14px;
+            font-weight: normal;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            position: relative;
+            z-index: 1;
+            margin-right: 90px;
+            margin-bottom: 0px;
+            cursor: text;
+        }
+    }
+
+    /* Disable pointer events for all anchor tags within the nav-tabs */
+    .nav-tabs a {
+        pointer-events: none;
+    }
+
+    .lookup_search .filter-option-inner-inner {
+        background: transparent;
+        opacity: 1;
+        color: #323031;
+        font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    }
+
+    .lookup_search button {
+        background: transparent !important;
+        border: 1px solid lightgray;
+        z-index: 9;
+    }
+
+    .lookup_search svg {
+        position: relative;
+        top: 30px;
+        z-index: 9;
+        float: right;
+        right: 5px;
+    }
+
+    .ui.selection.dropdown .menu {
+        max-height: 26.028571rem !important;
+    }
+
+    /*modification for dropdown*/
+    .ui.multiple.dropdown>.label {
+        color: rgb(17, 98, 188);
+        box-shadow: none !important;
+        background: transparent;
+    }
+
+    .bootstrap-select .dropdown-menu li a {
+        background: transparent;
+        color: #323031;
+        border: none;
+        font-size: 14px;
+    }
+
+    .open .dropdown-menu>li>a:hover,
+    .dropdown-menu>.active>a:hover {
+        background: rgba(0, 0, 0, .03);
+        color: #323031;
+        font-size: 14px;
+        border: none;
+    }
+
+    .dropdown-menu>li>a:focus,
+    .dropdown-menu>li>a:hover {
+        padding: 3px 20px;
+    }
+
+    .bootstrap-select .dropdown-toggle:focus,
+    .bootstrap-select>select.mobile-device:focus+.dropdown-toggle {
+        outline: 0px auto -webkit-focus-ring-color !important;
+    }
+</style>
+
+
+
+<!-- Loader HTML -->
+<div id="loaderContainer" class="loader-container">
+    <div class="loader"></div>
+</div>
+
+
+<div class="container wrapper-body">
+    {% if user %}
+    <div class="row">
+        <div class="col-md-12">
+            <!--alert end-->
+            <div class="tabbable-panel" style="display: grid;">
+                <div class="tabbable-line">
+                    <ul class="nav nav-tabs ">
+                        <li class="active">
+                            <a href="#tab_default_1" data-toggle="tab">Case Request </a>
+                        </li>
+                        <li>
+                            <a href="#tab_default_2" data-toggle="tab">Questionnaire </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="tab_default_1"><br />
+                            <!--alert-->
+                            <div class="alert alert-danger alert-dismissible" role="alert" style="display: none;">
+                                <strong>Please fill in all the required fields.</strong>
+                            </div>
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="casetitle_label">Case Title <span
+                                            style="color:red">*</span></label>
+                                    <input type="text" class="form-control" id="casetitle" required>
+                                </div>
+
+                                {% fetchxml Requestor %}
+                                <fetch version="1.0" output-format="xml-platform" mapping="logical" distinct="false">
+                                    <entity name="contact">
+                                        <attribute name="fullname" />
+                                        <attribute name="contactid" />
+                                        <attribute name="createdon" />
+                                        <order attribute="createdon" descending="true" />
+                                        <filter type="and">
+                                            <condition attribute="statecode" operator="eq" value="0" />
+                                            <condition attribute="contactid" operator="eq" value="{{ user.id }}" />
+                                        </filter>
+                                    </entity>
+                                </fetch>
+                                {% endfetchxml %}
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="requestor_label">Requestor <span
+                                            style="color:red">*</span></label>
+                                    <br />
+                                    {% for Requestors in Requestor.results.entities %}
+                                    <label id="requestor" value="{{Requestors.contactid}}"
+                                        style="padding-top: 6px; font-weight: 400;border: 0;">{{Requestors.fullname}}</label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-6 mb-2 lookup_search">
+                                    <label for="validationCustom01" id="onbehaf_label">On Behalf of</label>
+
+                                    {% fetchxml onbehalfof %}
+                                    <fetch version="1.0" output-format="xml-platform" mapping="logical"
+                                        distinct="false">
+                                        <entity name="contact">
+                                            <attribute name="fullname" />
+                                            <attribute name="contactid" />
+                                            <attribute name="createdon" />
+                                            <order attribute="createdon" descending="true" />
+                                            <filter type="and">
+                                                <condition attribute="statecode" operator="eq" value="0" />
+                                                <condition attribute="contactid" operator="ne" value="{{ user.id }}" />
+                                            </filter>
+                                        </entity>
+                                    </fetch>
+                                    {% endfetchxml %}
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                        <path
+                                            d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2ZM3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0Z">
+                                        </path>
+                                    </svg>
+
+
+                                    <select id="onbehalfof" class="dropdown bootstrap-select form-control" data-none-selected-text="" data-live-search="true">
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                        {% for onbehalfs in onbehalfof.results.entities %}
+                                        <option value='{{onbehalfs.contactid}}'>{{onbehalfs.fullname}}</option>
+                                        {% endfor %}
+                                    </select>
+
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="cc_label">If you want others to receive emails about
+                                        this request, please list them here:</label>
+                                    {% fetchxml stakeholder %}
+                                    <fetch version="1.0" output-format="xml-platform" mapping="logical"
+                                        distinct="false">
+                                        <entity name="contact">
+                                            <attribute name="fullname" />
+                                            <attribute name="contactid" />
+                                            <attribute name="createdon" />
+                                            <attribute name="emailaddress1" />
+                                            <order attribute="createdon" descending="true" />
+                                            <filter type="and">
+                                                <condition attribute="statecode" operator="eq" value="0" />
+                                                <condition attribute="contactid" operator="ne" value="{{ user.id }}" />
+                                            </filter>
+                                        </entity>
+                                    </fetch>
+                                    {% endfetchxml %}
+                                    <div class="ui fluid selection dropdown multiple form-control" id="stakeholders"
+                                        style="border-radius:0; min-height:35px; padding:2px;height: fit-content;">
+                                        <input type="hidden" name="stakeholders" value="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14"
+                                            height="22" style="float: right; padding-top: 5px;">
+                                            <path
+                                                d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z">
+                                            </path>
+                                        </svg>
+                                        <div class="default text">Select stakeholders</div>
+                                        <div class="menu">
+                                            <div class="ui icon input">
+                                                <input type="text" placeholder="Search..." id="searchInput">
+                                                <i class="search icon"></i>
+                                            </div>
+                                            <div class="scrolling menu" style="max-height: 200px; overflow-y: auto;">
+                                                {% for stakeholders in stakeholder.results.entities %}
+                                                <div class="item" data-value='{{stakeholders.contactid}}'
+                                                    emailid="{{stakeholders.emailaddress1}}">
+                                                    {{stakeholders.fullname}}
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="casecategory_label">Case Category <span
+                                            style="color:red">*</span></label>
+                                    <select id="casecategory" class="form-control" required>
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                        <option value="866500000">Privacy Review</option>
+                                        <option value="866500001">General Question</option>
+                                        <option value="866500002">Privacy Incident</option>
+                                        <option value="866500003">Training</option>
+                                        <option value="866500004">Other</option>
+                                    </select>
+
+                                </div>
+
+                                <!--single Select Option Set-->
+                                <div class="col-md-6 mb-2 lookup_search">
+                                    <label for="validationCustom01" id="caseactivity_label">Case Activity <span
+                                            style="color:red">*</span></label>
+                                    {% fetchxml CaseActivity %}
+                                    <fetch version="1.0" output-format="xml-platform" mapping="logical"
+                                        distinct="true">
+                                        <entity name="stringmap">
+                                            <attribute name="attributename" />
+                                            <attribute name="attributevalue" />
+                                            <attribute name="value" />
+                                            <attribute name="stringmapid" />
+                                            <filter>
+                                              <condition attribute="attributename" operator="eq" value="msp_caseactivities" />
+                                            </filter>
+                                        </entity>
+                                    </fetch>
+                                    {% endfetchxml %}
+
+                                    <div class="ui fluid selection dropdown multiple form-control" id="caseActivity"
+                                        style="border-radius:0; min-height:35px; padding:2px;height: fit-content;">
+                                        <input type="hidden" name="caseActivity" value="">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14"
+                                            height="22" style="float: right; padding-top: 5px; top: 4px;">
+                                            <path
+                                                d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z">
+                                            </path>
+                                        </svg>
+                                        <div class="default text">Select case Activity</div>
+                                        <div class="menu">
+                                            <div class="ui icon input">
+                                                <input type="text" placeholder="Search..." id="searchInput">
+                                                <i class="search icon"></i>
+                                            </div>
+                                            <div class="scrolling menu" style="max-height: 200px; overflow-y: auto;">
+                                                {% assign uniqueValues = "" %}
+                                                {% for CaseActivitys in CaseActivity.results.entities %}
+                                                    {% assign currentValue = CaseActivitys.value %}
+                                                    
+                                                    {% unless uniqueValues contains currentValue %}
+                                                        <div class="item" data-value='{{ CaseActivitys.attributevalue }}' emailid="">
+                                                            {{ CaseActivitys.value }}
+                                                        </div>
+                                                        {% assign uniqueValues = uniqueValues | append: currentValue | append: "," %}
+                                                    {% endunless %}
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <select id="caseActivity" class="form-control" data-live-search="true" required> -->
+                                     <!-- <select id="caseActivity" class="dropdown bootstrap-select form-control" data-none-selected-text="" data-live-search="true" required>
+                                         <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                         {% for CaseActivitys in CaseActivity.results.entities %}
+                                         <option value='{{CaseActivitys.msp_caseacivityid}}'>{{CaseActivitys.msp_name}}
+                                         </option>
+                                         {% endfor %}
+                                     </select> -->
+                                </div>
+
+                            </div>
+
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-6 mb-2 lookup_search">
+                                    <label for="validationCustom01" id="relatedcase_label">Related Case</label>
+                                    {% fetchxml relatedcase %}
+                                    <fetch version="1.0" output-format="xml-platform" mapping="logical"
+                                        distinct="false">
+                                        <entity name="incident">
+                                            <attribute name="incidentid" />
+                                            <attribute name="msp_relatedcase" />
+                                            <attribute name="title" />
+                                            <attribute name="ticketnumber" />
+                                            <order attribute="customerid" descending="false" />
+                                        </entity>
+                                    </fetch>
+                                    {% endfetchxml %}
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                        <path
+                                            d="M10.25 2a8.25 8.25 0 0 1 6.34 13.53l5.69 5.69a.749.749 0 0 1-.326 1.275.749.749 0 0 1-.734-.215l-5.69-5.69A8.25 8.25 0 1 1 10.25 2ZM3.5 10.25a6.75 6.75 0 1 0 13.5 0 6.75 6.75 0 0 0-13.5 0Z">
+                                        </path>
+                                    </svg>
+
+                                    <!-- <select id="relatedcase" class="form-control" data-live-search="true"> -->
+                                    <select id="relatedcase" class="dropdown bootstrap-select form-control" data-none-selected-text="" data-live-search="true">
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                        {% for relatedcases in relatedcase.results.entities %}
+                                        <option value='{{relatedcases.incidentid}}'>{{relatedcases.ticketnumber}} | {{relatedcases.title}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                
+
+
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="region_label">Region <span
+                                            style="color:red">*</span></label>
+                                    {% fetchxml region %}
+                                    <fetch version="1.0" output-format="xml-platform" mapping="logical"
+                                        distinct="false">
+                                        <entity name="msp_regions">
+                                            <attribute name="msp_regionsid" />
+                                            <attribute name="msp_name" />
+                                            <attribute name="createdon" />
+                                            <order attribute="msp_name" descending="false" />
+                                        </entity>
+                                    </fetch>
+                                    {% endfetchxml %}
+                                    <select id="region" class="form-control" required>
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                        {% for regions in region.results.entities %}
+                                        <option value='{{regions.msp_regionsid}}'>{{regions.msp_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="area_label">Area</label>
+                                    <select id="area" class="form-control">
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="businessunit_label">Business Unit</label>
+                                    <select id="businessunit" class="form-control">
+                                        <option selected="selected" value="" label=" " aria-label="Blank"> </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <script>
+                                debugger;
+                                var region = '{{user.msp_regions.id}}';
+
+                                var areaID = '{{user.msp_area.id}}';
+                                var areaName = '{{user.msp_area.name}}';
+
+                                var businessunitID = '{{user.msp_businessunit.id}}';
+                                var businessunitName = '{{user.msp_businessunit.name}}';
+                                if(region !== '' && areaID !== '' && businessunitID !== ''){
+                                    $("#region option[value='"+region+"']").prop("selected",true);
+
+                                    // $("#area option[value='"+area+"']").prop("selected",true);
+                                    $('#area').append($('<option>', {value: ''+ areaID +'', text: ''+ areaName +''})).val(''+ areaID +'');
+                                    // $("#businessunit option[value='"+businessunit+"']").prop("selected",true);
+                                    $('#businessunit').append($('<option>', {value: ''+ businessunitID +'', text: ''+ businessunitName +''})).val(''+ businessunitID +'');
+                                    //if region is mareketing then disbale the 3 fields 
+                                    if($("#region").val() === "171cc241-70d1-ee11-9079-6045bd02fc37"){
+                                        $("#region, #area, #businessunit").prop("disabled",true)
+                                    }  
+                                   debugger;      
+                                }else{
+                                   getRequesterInfo();
+                                  
+                                }
+
+                            async function getRequesterInfo() {
+                                var entityId = '{{user.id}}';
+                                var entityName = 'contacts('+entityId+')';
+                                var entityQuery = '$select=emailaddress1&$expand=msp_manager($select=_msp_manager_value,msp_email)';
+                                var missing_values = true;
+                                
+                                var organization_UserInfo = await retrieveRecord(entityName,entityQuery);
+                                var managerid = organization_UserInfo.msp_manager._msp_manager_value;
+                                var userEmail = organization_UserInfo.msp_manager.msp_email
+                                                              
+                                while(missing_values){
+                                    entityName = 'msp_privmans';
+                                    entityQuery = "$select=msp_name,_msp_regions_value,_msp_areas_value,_msp_businessunits_value&$filter=msp_email eq '"+userEmail+"'&$top=1";
+                                    var privMan = await retrieveRecord(entityName,entityQuery);
+                                    var privMan_Record = {
+                                        "_msp_regions_value":null,
+                                        "_msp_areas_value":null,
+                                        "_msp_businessunits_value":null
+
+                                    };
+                                    if(privMan.value.length > 0){
+                                        privMan_Record = privMan.value[0];
+                                    }
+                                         
+                                        if (privMan_Record._msp_regions_value == null || privMan_Record._msp_areas_value == null || privMan_Record._msp_businessunits_value == null ){
+                                            if(managerid == "" || managerid == null){
+                                                missing_values = false;
+                                                await getCasedetailsRelatedtoUser('{{user.id}}');
+                                            }else{
+                                            
+                                                entityName='msp_organizationstructures('+managerid+')';
+                                                entityQuery='$select=_msp_manager_value,msp_email';
+                                                organization_UserInfo = await retrieveRecord(entityName,entityQuery);
+                                                managerid = organization_UserInfo._msp_manager_value;
+                                                userEmail = organization_UserInfo.msp_email;
+                                            }
+                                            debugger;
+
+                                        }else{
+                                            missing_values = false;
+                                            var region = privMan_Record._msp_regions_value;
+                                            var areaID = privMan_Record._msp_areas_value;
+                                            var areaName = privMan_Record["_msp_areas_value@OData.Community.Display.V1.FormattedValue"];
+                                            var businessunitID = privMan_Record._msp_businessunits_value;
+                                            var businessunitName = privMan_Record["_msp_businessunits_value@OData.Community.Display.V1.FormattedValue"];
+
+                                            $("#region option[value='"+region+"']").prop("selected",true);
+                                            $('#area').append($('<option>', {value: ''+ areaID +'', text: ''+ areaName +''})).val(''+ areaID +'');
+                                            $('#businessunit').append($('<option>', {value: ''+ businessunitID +'', text: ''+ businessunitName +''})).val(''+ businessunitID +'');
+                                            if($("#region").val() === "171cc241-70d1-ee11-9079-6045bd02fc37"){
+                                                $("#region, #area, #businessunit").prop("disabled",true)
+                                            }
+                                        }
+
+                                   
+                                }
+
+                                
+                            }
+
+                            async function getCasedetailsRelatedtoUser(contactid){
+                                entityName = 'incidents';
+                                entityQuery = "$select=_msp_regionsid_value,_msp_area_value,_msp_businessunit_value&$filter=_customerid_value eq '"+contactid+"' and _msp_regionsid_value ne null and _msp_area_value ne null and _msp_businessunit_value ne null &$orderby=createdon desc&$top=1";
+                                var CasesList = await retrieveRecord(entityName,entityQuery);
+                                if(CasesList.value.length > 0){
+                                    var region = CasesList.value[0]._msp_regionsid_value;
+                                    var areaID = CasesList.value[0]._msp_area_value;
+                                    var areaName = CasesList.value[0]["_msp_area_value@OData.Community.Display.V1.FormattedValue"];
+                                    var businessunitID = CasesList.value[0]._msp_businessunit_value;
+                                    var businessunitName = CasesList.value[0]["_msp_businessunit_value@OData.Community.Display.V1.FormattedValue"];
+                                    
+                                    $("#region option[value='"+region+"']").prop("selected",true);
+                                    $('#area').append($('<option>', {value: ''+ areaID +'', text: ''+ areaName +''})).val(''+ areaID +'');
+                                    $('#businessunit').append($('<option>', {value: ''+ businessunitID +'', text: ''+ businessunitName +''})).val(''+ businessunitID +'');
+                                    if($("#region").val() === "171cc241-70d1-ee11-9079-6045bd02fc37"){
+                                        $("#region, #area, #businessunit").prop("disabled",true)
+                                    }
+
+                                }
+                                console.log(CasesList);
+
+                            }
+
+                            async function retrieveRecord(entityName, entityQuery) {
+                                var requestUrl = "/_api/"+entityName+"?"+entityQuery;
+
+                                try {
+                                    const response = await fetch(requestUrl, {
+                                        method: "GET",
+                                        headers: {
+                                            "Accept": "application/json",
+                                            "Content-Type": "application/json; charset=utf-8",
+                                            "OData-MaxVersion": "4.0",
+                                            "OData-Version": "4.0"
+                                        }
+                                    });
+                                    
+                                    if (!response.ok) {
+                                        throw new Error("HTTP error " + response.status);
+                                    }
+                                    const data = await response.json();
+                                    return data;
+                                } catch (error) {
+                                    console.error("Error retrieving record:", error);
+                                    throw error;
+                                }
+
+                            }
+
+                           
+                            </script>
+
+                            <div class="form-row" style="padding-bottom:80px !important">
+                                <div class="col-md-6 mb-2">
+                                    <label for="file" id="file_label">Choose files :</label>
+                                    <span class="control-fileupload">
+                                        <input type="file" id="file" multiple>
+                                    </span>
+
+                                    <div id="file-list" style="padding-top: 5px;">
+                                        <!-- Rendered files will appear here -->
+                                    </div>
+                                    <label for="alertsign" style="color: red;" class="alertFileUpload"></label>
+                                </div>
+
+                                <div class="col-md-6 mb-2">
+                                    <label for="validationCustom01" id="ponumber_label">PO Number</label>
+                                    <input type="text" class="form-control" id="ponumber">
+                                </div>
+                            </div>
+
+                            <div class="form-row" style="padding-bottom:80px !Important">
+                                <div class="col-md-12 mb-2">
+                                    <label for="validationCustom01" id="description_label">Description <span
+                                            style="color:red">*</span></label>
+                                    <textarea type="text" rows="5" class="form-control" id="description"
+                                        required></textarea>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="row newCaseBtn">
+                                <input type="button" name="Nextbtn" value="Next" id="NextButton"
+                                    class="submit-btn btn btn-success form-action-container-left" />
+                            </div>
+
+                            <br />
+                        </div>
+
+
+                        <div class="tab-pane" id="tab_default_2" style="display: grid;">
+                            <!--alert-->
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>!! Please fill in all the required fields.</strong>
+                            </div>
+                            <!--alert-->
+                            <div class="alert alert-success alert-dismissible" role="alert">
+                                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                <strong>!! Please fill in all the required fields.</strong>
+                            </div>
+                            <div id="questionnaireContent" style="width: 100%;"></div>
+
+                            <br />
+                            <div style="float:right;">
+                                <div class="row newCaseBtn">
+                                    <input type="button" name="submitBtn" value="Submit" id="SubmitButton"
+                                        class="submit-btn btn btn-primary form-action-container-left w-100" />
+                                </div>
+                                <div class="row newCaseBtn">
+                                    <input type="button" name="backBtn" value="Back" id="BackButton"
+                                        class="submit-btn btn btn-success form-action-container-left w-100" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <script>
+            window.location.href = "https://msprivacydeskdev.powerappsportals.com/signin";
+    </script>
+    {% endif %}
+</div>
+
+<script>
+    
+    $('.ui.dropdown.multiple').dropdown({
+        allowAdditions: true,
+    });
+
+    $(document).ready(function () {
+        //tooltip
+        $('#casetitle_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Please have a look at <a target=" + "_blank" + " href=" + "https://privcondev.powerappsportals.com/InquiryReasons/" + ">Inquiry Reasons info Table</a> for examples of Privacy Request Reasons.'></a>");
+        $('#requestor_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Personal data is any information that is linked to a person, such as IP Address, email address, or other identifier. If personal data is being shared with or accessed by a company other than Microsoft, it is considered 3rd-party processing.' ></a>");
+        $('#onbehaf_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='If you are collecting, using, processing, analyzing, or storing data for longer than a year (for example, if you are running an evergreen campaign), select " + "More than a year." + " If this is a time-limited campaign in which data will be collected, used, processed, analyzed, or stored for less than a year, select " + "Less than a year." + " ' ></a>");
+        $('#cc_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='If you are not in Marketing, we require a Marketing Stakeholder to complete a privacy review. Need privacy help, but not part of Marketing?, please see the <a target=" + "_blank" + " href=" + "https://aka.ms/privacycontacts" + ">Privacy Contacts Page' ></a>");
+        $('#casecategory_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Select the platform that will be sending your email, or, if you are unsure, choose " + "Other." + "' ></a>");
+        $('#caseactivity_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='For promotional email sends, you must connect to CPM to identify contactable customers and include an unsubscribe link. For transactional sends, you may need to connect to CPM to scrub for Red Alerted email addresses. Please visit the <a target=" + "_blank" + " href=" + "https://aka.ms/EmailGuide" + ">Email Guide</a> to understand the difference between Transactional and Promotional emails. CPM is broken out into Topics, such as MS Wide, SBO, Xbox Promotional Communications, and the Transactional Topic (for Red Alert suppressions), and includes Topic IDs.  Learn more about <a target=" + "_blank" + " href=" + "https://aka.ms/AboutCPMTopics" + ">CPM Topics</a>.' ></a>");
+        $('#relatedcase_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Please provide the source of data: O365, Windows, MSX, etc.\n Please also list the categories of data that will be used to target this audience, such as demographic, firmographic, usage, geographic location, industry, customer base, type of organization, technologies used, commerce, subscription, etc.' ></a>");
+        $('#region_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='The countries listed have special privacy requirements. Please choose all that apply. Each choice introduces additional requirements, so please avoid choosing more than those that are applicable.' ></a>");
+        $('#area_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Please provide the top-level URL (typically the URL for the site&apos;s home or landing page; links to subpages within the site are not required) for the website that requires a privacy review.' ></a>");
+        $('#businessunit_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='The URL should start with webcompliance.trafficmanager.net. All external-facing websites must be entered into the Web Compliance Portal to monitor cookie compliance and ensure that a cookie banner appears as required. Once your site is submitted to the WCP, link the site entry here so we are able to easily find it and review it. If your site is not yet in the WCP, please proceed with this privacy review request; the WCP entry can be made in parallel. See the <a target=" + "_blank" + " href=" + "https://aka.ms/WebsitesGuide" + ">Website Guide</a> for more details.' ></a>");
+        $('#ponumber_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Select the platform that will be usign for event registaion, event management and event , or, if you are unsure, choose Other.' ></a>");
+        $('#description_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='We want to know how the data was collected, either through this activity or from an existing data source. If you are using data that was previously collected from another activity then please select that.' ></a>");
+        $('#file_label').append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='Identify the systems where data used in this activity is stored. Ex: Marketo, SMART DB.' ></a>");
+
+        // // Start - Stakeholder information tooltip popover
+        // var debounce = debounce || function (func, wait, immediate) {
+        //     var timeout;
+        //     return function () {
+        //         var context = this, args = arguments;
+        //         var later = function () {
+        //             timeout = null;
+        //             if (!immediate) func.apply(context, args);
+        //         };
+        //         var callNow = immediate && !timeout;
+        //         clearTimeout(timeout);
+        //         timeout = setTimeout(later, wait);
+        //         if (callNow) func.apply(context, args);
+        //     };
+        // };
+
+        function hideAll() {
+            $("[data-toggle=popover]").each(function () {
+                var popover = $(this).data('bs.popover');
+                if (popover != null && popover != undefined && popover.tip().is(':visible')) popover.hide();
+            });
+        }
+
+        $("[data-toggle=popover]")
+            .popover({ animation: false, container: document.body, delay: 50, html: true, sanitize: false, trigger: 'manual', placement: 'auto right' })
+            .each(function () {
+                var popover = $(this).data('bs.popover');
+                var $tip = popover.tip();
+                var delay = popover.options.delay || 0;
+                var showDelay = delay.show || delay || 0;
+                var hideDelay = delay.hide || delay || 0;
+                var showTimeout = null
+                var hideTimeout = null;
+
+                $(this).add($tip).hover(function show() {
+                    if (hideTimeout) {
+                        clearTimeout(hideTimeout);
+                        hideTimeout = null;
+                    } else if (!$tip.is(':visible')) {
+                        hideAll();
+                        showTimeout = setTimeout(function () {
+                            popover.show();
+                            showTimeout = null;
+                        }, showDelay);
+                    }
+                }, function hide() {
+                    if (showTimeout) {
+                        clearTimeout(showTimeout);
+                        showTimeout = null;
+                    } else if ($tip.is(':visible')) {
+                        hideTimeout = setTimeout(function () {
+                            popover.hide();
+                            hideTimeout = null;
+                        }, hideDelay);
+                    }
+                });
+            });
+
+
+
+
+
+        $('#tab_default_2').hide();
+        $('div.alert').hide();
+        $('.alertFileUpload').hide();
+        $('.lookup_search select').selectpicker();
+        $('.lookup_search div.menu').selectpicker();
+
+        $('#searchInput').on('keyup', function () {
+            var searchText = $(this).val().toLowerCase();
+            $('.item').each(function () {
+                var itemText = $(this).text().toLowerCase();
+                if (itemText.includes(searchText)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        });
+
+        if ($('.ui.label.transition.visible').text() == '') {
+            $('.ui.label').remove();
+        }
+
+        $('.form-control').keyup(function () {
+            if ($.trim($('.form-control').val()).length) {
+                $(this).removeClass('error-highlight');
+                $('.alert-danger').hide();
+            }
+        });
+        $('.form-control').change(function () {
+            $(this).removeClass('error-highlight');
+            $('.alert-danger').hide();
+        });
+
+        $(".actions").prepend("<a onclick='NextFunction()' id='NextButton' class='btn-default btn form-action-container-right' style='margin-top:20px' > Next </a><br/>");
+        $(".actions").prepend("<a onclick='PreviousFunction()' id='PreviousButton' class='btn-default btn form-action-container-right' style='margin-top:41px; margin-left:20px' > Previous </a><br/>");
+
+        // Array to store uploaded files
+        var uploadedFiles = [];
+
+        // Function to make API call and return data to get Questions
+        function fetchDataFromAPI(getActivityVal, getCategoryVal, callback) {
+            fetchQuestionID(getActivityVal, getCategoryVal, function (rid) {
+                var yourWebPageUrl = window.location.origin + "/fetchquestions?id=" + rid;
+                var xhr = new XMLHttpRequest();
+                xhr.open("GET", yourWebPageUrl, true);
+                xhr.onload = function () {
+                    var status = xhr.status;
+                    if (status == 200) {
+                        try {
+                            // Remove excessive newlines
+                            var jsonString = xhr.responseText.replace(/\r\n+/g, '');
+                            var jsonObjects = jsonString.split(/\}\s*\{/);
+                            var jsonArray = [];
+                            console.log(jsonObjects);
+                            jsonObjects.forEach(function (objString, index) {
+                                if (index > 0 && objString.trim()[0] !== '{') {
+                                    objString = '{' + objString;
+                                }
+                                if (index < jsonObjects.length - 1 && objString.trim().slice(-1) !== '}') {
+                                    objString = objString + '}';
+                                }
+                                // Escape special characters within the msp_question field
+                                objString = objString.replace(/"msp_question" : "(.*?)"/g, function (match, p1) {
+                                    var escapedValue = p1.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/\n/g, '\\n');
+                                    return '"msp_question" : "' + escapedValue + '"';
+                                });
+                                try {
+                                    var jsonObject = JSON.parse(objString);
+                                    jsonArray.push(jsonObject);
+                                } catch (e) {
+                                    console.error("Error parsing JSON:", e);
+                                }
+                            });
+
+                            console.log(jsonArray);
+                            //jsonArray.sort((a,b)=>a.order -b.order);
+                            debugger;
+                            callback(jsonArray);
+                        } catch (e) {
+                            console.error("Error parsing JSON:", e);
+                        }
+                    }
+                };
+                xhr.send();
+            });
+        }
+
+        // function to make api call and return data to get questionare record id
+        function fetchQuestionID(getActivityVal, getCategoryVal, callback) {
+            var yourWebPageUrl = window.location.origin + "/fetchquestionrecord?activity=" + getActivityVal + "&category=" + getCategoryVal;
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", yourWebPageUrl, true);
+            xhr.onload = function () {
+                var status = xhr.status;
+                if (status == 200) {
+                    try {
+                        // Remove excessive newlines
+                        var getResponse = JSON.parse(xhr.responseText);
+                        var rid = getResponse.msp_questionnaireid;
+                        debugger;
+                        callback(rid);
+                    } catch (e) {
+                        console.error("Error parsing JSON:", e);
+                        $('.alert-danger').text("No questions are available for the selected Case Activity or Case Category.").show();
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+
+        $('a[href="#tab_default_1"]').on('click', function () {
+            // Hide the first tab
+            $('#tab_default_2').hide();
+        });
+
+        // Event listener for "Next" button click
+        var getActivityFieldValidation = "";
+        $('#NextButton').click(function () {
+            var hasErrors = false;
+            $('#questionnaireContent').empty();
+            $('.form-control').removeClass('error-highlight');
+            $('.form-control[required]').each(function () {
+                var value = $(this).val().trim();
+
+                if (!value) {
+                    $(this).addClass('error-highlight');
+                    hasErrors = true;
+                }
+            });
+
+            if (hasErrors) {
+                $('.alert-danger').text("Please fill in all the required fields.").show();
+                return false;
+            }
+
+            var getCategoryVal = $("#casecategory").val();
+            var caseActivityObj= [];
+            debugger;
+            $("#caseActivity div.active.filtered").each(function () {
+                if ($(this).text().trim() != '') {
+                    // Mansour
+                    // var stakeholder = {
+                    //     "fullname": $(this).text().trim(),
+                    //     "contactid": $(this).attr('data-value')
+                    // };
+                    // caseActivityObj.push(stakeholder);
+                    caseActivityObj.push( $(this).attr('data-value'));
+                }
+            });
+            if (caseActivityObj.length > 0 && getCategoryVal != '') {
+                $('#questionnaireContent').empty();
+                $('#loaderContainer').show();
+                // Call the function to fetch data from API
+                // foreach method to generate dynamic questions
+                caseActivityObj.forEach(function (activity) {
+                    // Mansour
+                    // var activityParams = activity.contactid;
+                    var activityParams = activity;
+                    fetchDataFromAPI(activityParams, getCategoryVal, function (data) {
+                        // Check the data and create HTML elements dynamically
+                        if (data && data.length > 0) {
+                            var processedItems = []; // Initialize an array to keep track of processed items
+                            debugger;
+                            data.forEach(function (question) {
+                                // Check if an element with the same ID already exists
+                                var questionnaireContent = $('#questionnaireContent');
+                                $('.alert-danger').hide();
+
+                                if (question.msp_fieldtype === "Single line of Text" || question.msp_fieldtype === "Drop Down list" || question.msp_fieldtype === "Multi line of Text" || question.msp_fieldtype === "Multi Select Drop Down list") {
+                                    var newDiv = $('<div class="col-md-6 mb-2"></div>');
+
+                                    if (question.tooltip != "") {
+                                        //var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        //label.append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content="+ question.tooltip +" data-original-title='' title=''></a>");
+                                        var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        var icon = $("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='" + question.tooltip + "' data-original-title='' title='' data-trigger='hover'></a>");
+
+
+                                        if (question.msp_mandate == 'true') {
+                                            var astr = '<span style="color:red;padding-left:5px">*</span>'
+                                            label.append(astr);
+
+                                        }
+
+                                        label.append(icon);
+                                        // Initialize Bootstrap tooltip plugin
+                                        icon.popover();
+                                    }
+                                    else {
+                                        var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        if (question.msp_mandate == 'true') {
+                                            var astr = '<span style="color:red;padding-left:5px">*</span>'
+                                            label.append(astr);
+
+                                        }
+                                    }
+
+                                    var input;
+
+                                    if (question.msp_fieldtype === "Single line of Text") {
+                                        input = $('<input type="' + question.msp_fieldtype + '" fieldTypeID="' + question.msp_fieldtypeID + '" class="form-control question-input" id="' + question.questionconfigurationid + '" name="' + question.msp_question + '" mandate="' + question.msp_mandate + '" >');
+                                        newDiv.append(label);
+                                        newDiv.append(input);
+                                        newDiv.append('<br>');
+                                        processedItems.push(newDiv); // Push the processed item to the array
+                                    }
+                                    else if (question.msp_fieldtype === "Drop Down list") {
+                                        input = $('<select class="form-control question-input" fieldTypeID="' + question.msp_fieldtypeID + '" type="' + question.msp_fieldtype + '" id="' + question.questionconfigurationid + '" name="' + question.msp_question + '" mandate="' + question.msp_mandate + '"></select>');
+                                        var options = question.msp_options.split(";");
+                                        var is_selected = "Yes"
+                                        // Split options string into array
+                                        input.append('<option value="" label=" " aria-label="Blank"> </option>');
+                                        options.forEach(function (option) {
+
+                                            if (option != "" && is_selected == "Yes") {
+                                                input.append("<option value='" + option + "' selected>" + option + "</option>");
+                                                is_selected = "No";
+
+                                            } else {
+                                                input.append("<option value='" + option + "'>" + option + "</option>");
+                                            }
+
+
+                                        });
+                                        newDiv.append(label);
+                                        newDiv.append(input);
+                                        newDiv.append('<br>');
+                                        processedItems.push(newDiv); // Push the processed item to the array
+                                    }
+                                    else if (question.msp_fieldtype === "Multi Select Drop Down list") {
+                                        var label = $('<label for="' + question.msp_questionconfigurationid + '">' + question.msp_name + '</label>');
+                                        var select = $('<div class="ui fluid selection dropdown multiple form-control" id="' + question.msp_questionconfigurationid + '" style="border-radius:0; min-height:35px; padding:2px" required></div>');
+                                        var hiddenInput = $('<input type="hidden" name="' + question.questionconfigurationid + '" required>');
+                                        var svgIcon = $('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="14" height="22" style="float: right; padding-top: 5px;"><path d="M12.78 5.22a.749.749 0 0 1 0 1.06l-4.25 4.25a.749.749 0 0 1-1.06 0L3.22 6.28a.749.749 0 1 1 1.06-1.06L8 8.939l3.72-3.719a.749.749 0 0 1 1.06 0Z"></path></svg>');
+                                        var defaultText = $('<div class="default text">Select ' + question.msp_name + '</div>');
+                                        var menu = $('<div class="menu"></div>');
+
+                                        var options = question.msp_options.split(";");
+                                        options.forEach(function (option) {
+                                            var item = $('<div class="item" data-value="' + option + '">' + option + '</div>');
+                                            menu.append(item);
+                                        });
+
+                                        select.append(hiddenInput);
+                                        select.append(svgIcon);
+                                        select.append(defaultText);
+                                        select.append(menu);
+                                        newDiv.append(label);
+                                        newDiv.append(select);
+                                        $('#tab_default_2').show();
+                                        questionnaireContent.append(newDiv);
+
+                                        // Initialize dropdown
+                                        select.dropdown({
+                                            allowAdditions: true,
+                                            onChange: function (value, text, $selectedItem) {
+                                                // Update hidden input value
+                                                var selectedValues = hiddenInput.val() || [];
+                                                if (!selectedValues.includes(value)) {
+                                                    selectedValues.push(value);
+                                                    hiddenInput.val(selectedValues);
+                                                }
+                                            }
+                                        });
+                                    }
+
+                                }
+                                else if (question.msp_fieldtype === "Yes/No") {
+
+                                    var newDiv = $('<div class="col-md-6 question"></div>'); // Added question class
+                                    if (question.tooltip != "") {
+                                        //var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        //label.append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content="+ question.tooltip +" data-original-title='' title=''></a>");
+                                        var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        var icon = $("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content='" + question.tooltip + "' data-original-title='' title='' data-trigger='hover'></a>");
+
+
+                                        if (question.msp_mandate == 'true') {
+                                            var astr = '<span style="color:red;padding-left:5px">*</span>'
+                                            label.append(astr);
+
+                                        }
+
+                                        label.append(icon);
+                                        // Initialize Bootstrap tooltip plugin
+                                        icon.popover();
+                                    }
+                                    else {
+                                        var label = $('<label for="validationCustom01">' + question.msp_question + '</label>');
+                                        if (question.msp_mandate == 'true') {
+                                            var astr = '<span style="color:red;padding-left:5px">*</span>'
+                                            label.append(astr);
+
+                                        }
+                                    }
+
+                                    var radioYes = $('<input type="radio" class="question-input" fieldTypeID="' + question.msp_fieldtypeID + '" id="' + question.questionconfigurationid + '_yes" mandate="' + question.msp_mandate + '" name="' + question.msp_question + '" value="Yes" checked = "true">'); // Added _yes suffix for ID
+                                    var labelYes = $('<label for="' + question.msp_question + '_yes">Yes</label>'); // Added _yes suffix for label
+                                    var radioNo = $('<input type="radio" style="margin-left: 10px" class="question-input" fieldTypeID="' + question.msp_fieldtypeID + '" id="' + question.questionconfigurationid + '_no" mandate="' + question.msp_mandate + '" name="' + question.msp_question + '" value="No">'); // Added _no suffix for ID
+                                    var labelNo = $('<label for="' + question.msp_question + '_no">No</label>'); // Added _no suffix for label
+
+                                    newDiv.append(label);
+                                    newDiv.append(radioYes);
+                                    newDiv.append(labelYes);
+                                    newDiv.append(radioNo);
+                                    newDiv.append(labelNo);
+                                    newDiv.append('<br>');
+                                    processedItems.push(newDiv); // Push the processed item to the array
+                                }
+                                else if (question.msp_fieldtype === "Calander") {
+                                    var newDiv = $('<div class="col-md-6 question"></div>'); // Added question class
+                                    if (question.tooltip !== "") {
+                                        var label = $('<label for="' + question.questionconfigurationid + '" style="padding-bottom: 20px;">' + question.msp_question + '</label>');
+                                        label.append("<a style='padding-left:5px' role='tooltip' tabindex='0' class='fa fa-info' aria-label='informationIcon' data-toggle='popover' data-content=" + question.tooltip + "></a>");
+                                    }
+                                    else {
+                                        var label = $('<label for="' + question.questionconfigurationid + '" style="padding-bottom: 20px;">' + question.msp_question + '</label>');
+                                    }
+                                    var calendarInput = $('<input type="date" class="form-control question-input" fieldTypeID="' + question.msp_fieldtypeID + '" id="' + question.questionconfigurationid + '" mandate="' + question.msp_mandate + '" name="' + question.msp_question + '">');
+                                    var currentDate = new Date().toISOString().split('T')[0];
+                                    newDiv.append(label);
+                                    newDiv.append(calendarInput);
+                                    calendarInput.val(currentDate);
+                                    processedItems.push(newDiv); // Push the processed item to the array
+                                }
+
+                                // Check if we have processed two items
+                                if (processedItems.length === 2) {
+                                    var formRowDiv = $('<div class="form-row" style="padding-bottom: 100px !important;"></div>');
+                                    formRowDiv.append(processedItems); // Append processed items to the form-row div
+                                    questionnaireContent.append(formRowDiv); // Append the form-row div to questionnaireContent
+                                    processedItems = []; // Reset the array for the next iteration
+                                }
+                            });
+
+                            // Check if there are any remaining processed items
+                            if (processedItems.length > 0) {
+                                var formRowDiv = $('<div class="form-row" style="padding-bottom: 80px !important;"></div>');
+                                formRowDiv.append(processedItems); // Append remaining processed items to the form-row div
+                                $('#questionnaireContent').append(formRowDiv); // Append the form-row div to questionnaireContent
+                            }
+                        } else {
+                            $('#loaderContainer').hide();
+                           // $('.alert-danger').text("No questions are available for the selected Case Activity or Case Category.").show();
+                            return false;
+                        }
+                    });
+                });
+                
+                $('#loaderContainer').hide();
+                $('.alert-success').hide();
+            } else {
+                $('.alert-danger').text("No questions are available for the selected Case Activity or Case Category.").show();
+                $('.alert-success').hide();
+                return false;
+            }
+            $('#loaderContainer').hide();
+            $('#tab_default_2').show();
+            $('a[href="#tab_default_2"]').tab('show');
+            $('#tab_default_1').hide();
+            $('.alert-success').hide();
+        });
+
+        // event listener for submit button
+        $('#SubmitButton').click(function () {
+            $("#SubmitButton").attr("disabled", true);
+            $("#BackButton").attr("disabled", true);
+            $('#loaderContainer').show();
+            var caseActivityobj = "";
+           
+            $("#caseActivity div.active.filtered").each(function () {
+                if ($(this).text().trim() != '') {
+                    // Mansour
+                    // var caseActivityArray = {
+                    //     "fullname": $(this).text().trim(),
+                    //     "contactid": $(this).attr('data-value'),
+                    // };
+                    // caseActivityobj.push(caseActivityArray);
+                     caseActivityobj = caseActivityobj +"," + $(this).attr('data-value') ;
+
+                }
+            });
+            caseActivityobj = caseActivityobj.slice(1);
+            debugger;
+
+            var stakeholdersArray = [];
+            debugger;
+            $("#stakeholders div.active.filtered").each(function () {
+                if ($(this).text().trim() != '') {
+                    var stakeholder = {
+                        "fullname": $(this).text().trim(),
+                        "contactid": $(this).attr('data-value'),
+                        "emailaddress1": $(this).attr('emailid')
+                    };
+                    stakeholdersArray.push(stakeholder);
+                }
+            });
+
+            var Data = {
+                "title": $('#casetitle').val(),
+                "msp_casecategory": $("#casecategory").val(),
+                "msp_CaseActivities": caseActivityobj,
+                "msp_RegionsId": $("#region").val(),
+                "msp_area": $("#area").val(),
+                "msp_businessunit": $("#businessunit").val(),
+                "description": $("#description").val(),
+                "customerid_contact": $('#requestor').attr('value'),
+                "onbehalfof": $("#onbehalfof").val(),
+                "relatedcase": $("#relatedcase").val(),
+                "ponumber": $('#ponumber').val(),
+                "stakeholders": stakeholdersArray
+            }
+            debugger;
+            var isValid = true;
+            var invalidFields = [];
+            var radioLabelCheck = '';
+            var previousLabel = '';
+            var previousDateLabel = '';
+            var generalVarLabel = '';
+            debugger;
+            $('.question-input').each(function () {
+                var questionElement = $(this);
+                var inputValue = questionElement.val().trim();
+                var inputType = questionElement.attr('type');
+
+                // Check for mandatory fields
+                if (questionElement.attr('mandate') === 'true' && inputValue === '' && (inputType === "Single line of Text" ||
+                    inputType === "Drop Down list" ||
+                    inputType === "Multi line of Text" ||
+                    inputType === "Multi Select Drop Down list")) {
+                    var currentVarLabel = questionElement.attr('name');
+                    if (previousLabel !== currentVarLabel) {
+                        isValid = false;
+                        questionElement.addClass('invalid-field');
+                        invalidFields.push(questionElement.attr('name'));
+                    }
+                }
+
+                if (questionElement.attr('mandate') === 'true' && inputValue === '' && (inputType === "Single line of Text" ||
+                    inputType === "Drop Down list" ||
+                    inputType === "Multi line of Text" ||
+                    inputType === "Multi Select Drop Down list")) {
+                    generalVarLabel = questionElement.attr('name');
+                }
+
+                // Check for radio buttons with no selection
+                if (inputType === 'radio' && !questionElement.is(":checked") && questionElement.attr('mandate') === 'true') {
+                    var currentLabel = questionElement.attr('name');
+                    if (previousLabel !== currentLabel) {
+                        isValid = false;
+                        questionElement.addClass('invalid-field');
+                        invalidFields.push(questionElement.attr('name'));
+                    }
+                }
+
+                // Check if the radio button is checked (either Yes or No)
+                if (inputType === 'radio' && questionElement.is(":checked")) {
+                    // Remove the label associated with the radio button from the invalidFields array
+                    var index = invalidFields.indexOf(questionElement.attr('name'));
+                    if (index > -1) {
+                        invalidFields.splice(index, 1);
+                    }
+                }
+
+                // Update the previousLabel variable for the next iteration
+                if (inputType === 'radio') {
+                    previousLabel = questionElement.attr('name');
+                }
+
+                // Check for date inputs with a mandate attribute set to true
+                if (inputType === 'date' && questionElement.attr('mandate') === 'true' && questionElement.val() === '') {
+                    var currentDateLabel = questionElement.attr('name');
+                    if (previousLabel !== currentDateLabel) {
+                        isValid = false;
+                        questionElement.addClass('invalid-field');
+                        invalidFields.push(questionElement.attr('name'));
+                    }
+                }
+
+                if (inputType === 'date') {
+                    previousDateLabel = questionElement.attr('name');
+                }
+            });
+
+            if (invalidFields.length === 0) {
+                isValid = true;
+            }
+
+            if (isValid) {
+                $('div.alert').hide();
+                var responses = [];
+                // Iterate over each question element
+                $('.question-input').each(function () {
+                    var questionElement = $(this);
+                    var question = {};
+
+                    var questionId = questionElement.attr('id');
+                    var questionText = questionElement.attr('name');
+
+                    var inputType = questionElement.attr('type');
+                    if (inputType === 'Single line of Text' || inputType === 'Multi line of Text') {
+                        question.msp_response = questionElement.val().trim();
+                        question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                    } else if (inputType === 'Drop Down list') {
+                        question.msp_response = questionElement.find('option:selected').val().trim();
+                        question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                    } else if (inputType === 'Multi Select Dropdown') {
+                        var selectedValues = [];
+                        questionElement.find('.item.selected').each(function () {
+                            selectedValues.push($(this).data('value'));
+                        });
+                        question.msp_response = selectedValues.join(';');
+                        question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                    } else if (questionElement.attr('type') === 'radio' && questionElement.is(':checked')) {
+                        question.msp_response = questionElement.filter(':checked').val();
+                        question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                    } else if (questionElement.attr('type') === 'date') {
+                        var inputValue = questionElement.val().trim();
+                        if (inputValue != "") {
+                            var date = new Date(inputValue);
+                            var formattedDate = ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+                            question.msp_response = formattedDate;
+                            question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                        }
+                        question.msp_response = formattedDate;
+                        question.msp_fieldtype = questionElement.attr('fieldTypeID');
+                    }
+                    var questionLength = Object.keys(question).length;
+                    if (questionLength !== 0) {
+                        question.msp_questionconfigurationid = questionId;
+                        question.msp_question = questionText;
+                        responses.push(question);
+                    }
+                });
+
+                OnSave(Data)
+                    .then(function (caseRecordID) {
+                        if (responses.length > 0) {
+                            saveResponse(caseRecordID, responses, function () {
+                                console.log("All responses saved successfully!");
+                                uploadToNoteAttachment(uploadedFiles, caseRecordID);
+                            });
+                        } else {
+                            if (uploadedFiles.length > 0) {
+                                uploadToNoteAttachment(uploadedFiles, caseRecordID);
+                            } else {
+                                $('#loaderContainer').hide();
+                                sessionStorage.setItem("sucessMSG", "Record Submitted");
+                                window.location.href = "https://msprivacydeskdev.powerappsportals.com/Case lists/";
+                            }
+                        }
+
+                    })
+                    .catch(function (error) {
+                        // Handle errors if OnSave fails
+                        console.error("Error occurred during submission:", error);
+                        $('#loaderContainer').hide();
+                    });
+            } else {
+                $('#loaderContainer').hide();
+                if (invalidFields.length > 0) {
+                    var invalidFieldsList = '<ul>';
+                    invalidFields.forEach(function (field) {
+                        invalidFieldsList += '<li>' + field + '</li>';
+                    });
+                    invalidFieldsList += '</ul>';
+                    $('.alert-danger').html('The following fields are required:<br>' + invalidFieldsList);
+                    $('.alert-danger').show();
+                    $("#SubmitButton").attr("disabled", false);
+                    $("#BackButton").attr("disabled", false);
+                } else {
+                    $('.alert-danger').hide();
+                }
+            }
+        });
+
+        $(function () {
+            $('input[type=file]').change(function () {
+                var files = $(this)[0].files;
+                $.each(files, function (index, file) {
+                    // Check file size
+                    if (file.size > 24 * 1024 * 1024) {
+                        $('.alertFileUpload').text('File size exceeds the limit of 24 MB.').show();
+                        return; // Skip this file
+                    }
+
+                    // Check file type
+                    var fileType = file.type.split('/')[0]; // Get the file type (e.g., 'image', 'video', 'application', etc.)
+                    if (fileType !== 'image' && fileType !== 'application') {
+                        $('.alertFileUpload').text('Only Word, Excel, PowerPoint, pdf and image files are allowed.').show();
+                        return; // Skip this file
+                    }
+
+                    var reader = new FileReader();
+                    reader.onload = function (event) {
+                        var base64 = event.target.result.split(',')[1];
+                        var fileName = file.name;
+
+                        var isDuplicate = uploadedFiles.some(function (uploadedFile) {
+                            return uploadedFile.fileName === fileName;
+                        });
+
+                        if (!isDuplicate) {
+                            uploadedFiles.push({
+                                base64: base64,
+                                fileName: fileName,
+                                fileType: fileType
+                            });
+                            $('.alertFileUpload').hide();
+                            renderFile(fileName);
+                        } else {
+                            $('.alertFileUpload').text('File with the name "' + fileName + '" is already uploaded.').show();
+                        }
+                    };
+                    reader.readAsDataURL(file);
+                });
+            });
+
+            $('#file-list').on('click', 'button.delete-file', function () {
+                var fileName = $(this).closest('div').data('filename');
+                deleteFile(fileName);
+            });
+        });
+
+        function renderFile(fileName) {
+            $('#file-list').append('<div data-filename="' + fileName + '">' + fileName + '&nbsp;&nbsp;&nbsp; <button class="delete-file">  Delete</button></div>');
+        }
+
+        function deleteFile(fileName) {
+            uploadedFiles = uploadedFiles.filter(function (file) {
+                return file.fileName !== fileName;
+            });
+
+            $('[data-filename="' + fileName + '"]').remove();
+        }
+
+        function uploadToNoteAttachment(files, caseRecordID) {
+            if (files.length > 0) {
+                $.each(files, function (index, file) {
+                    var record = {};
+                    record.filename = file.fileName; // Text
+                    record.documentbody = file.base64; // Text
+                    record.subject = file.fileName; // Text
+                    // Set the Regarding field to a case with GUID taken from the id parameter in the URL
+                    record["objectid_incident@odata.bind"] = "/incidents(" + caseRecordID + ")"; // Lookup
+
+                    // Perform API call to upload file
+                    webapi.safeAjax({
+                        type: "POST",
+                        contentType: "application/json",
+                        url: "/_api/annotations",
+                        data: JSON.stringify(record),
+                        success: function (data, textStatus, xhr) {
+                            sessionStorage.setItem("sucessMSG", "Record Submitted");
+                            var newId = xhr.getResponseHeader("entityid");
+                            console.log(newId);
+                            $('.alert-danger').hide();
+                            $('.alert-success').text("Record Submitted");
+                            window.location.href = "https://msprivacydeskdev.powerappsportals.com/Case lists/";
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.log(xhr);
+                        }
+                    });
+                });
+            } else {
+                $('.alert').hide();
+                $('.alert-success').text("Record Submitted");
+                sessionStorage.setItem("sucessMSG", "Record Submitted");
+                window.location.href = "https://msprivacydeskdev.powerappsportals.com/Case lists/";
+            }
+        }
+
+        function validateForm() {
+            $('.validation-error').remove();
+
+            var isValid = true;
+            $('.question-input').each(function () {
+                var field = $(this);
+                var value = field.val();
+                var isMandatory = field.data('mandate');
+
+                if (isMandatory) {
+                    if (value.trim() === '') {
+                        isValid = false;
+                        field.after('<div class="validation-error">This field is required</div>');
+                    }
+                }
+            });
+            return isValid;
+        }
+
+        //back button
+        $("#BackButton").on("click", function () {
+            // Show the first tab and trigger its content rendering
+            $('div.alert').hide();
+            $('#tab_default_1').show();
+            $('a[href="#tab_default_1"]').tab('show');
+            $('#tab_default_2').hide();
+            $('.alert-danger').hide();
+        });
+    });
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
